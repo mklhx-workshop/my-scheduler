@@ -1,5 +1,5 @@
 <div id="manage_events_devices" class="ui-corner-all ui-widget ui-widget-content container-fluid">
-	<form name="form_manage_events" id="form_manage_events" action="index.php?frame=planning_devices" method="post">
+	<form name="form_manage_events" id="form_manage_events" action="../templates/index.php" method="post">
 		<div class="divcenter">
 			<label class="ui-widget-header ui-corner-all">Utilisateur : </label>
 			<label class="ui-widget-header ui-corner-all">Appareil : </label>

@@ -1,4 +1,4 @@
-<form id="form_historique_devices" name="form_historique_devices" action="index.php?frame=historique_devices" method="post">
+<form id="form_historique_devices" name="form_historique_devices" action="../templates/index.php" method="post">
 	<div id="vue_historique_devices" class="ui-widget ui-state-default ui-corner-all">
 		<div class="row">
 			<label class="ui-widget-header ui-corner-all"  for="DateStart"-->Date de Début : </label>
@@ -86,7 +86,7 @@
 		</table>
 	</div>
 </form>
-<form method="post" action="index.php">
+<form method="post" action="../templates/index.php">
 	<div  id="retour_historique_devices" class="ui-widget ui-state-default ui-corner-all">
 		<button id="BP_Retour" name="frame" class="ui-corner-all ui-state-default" value="planning">Retour</button>
 	</div>

@@ -1,4 +1,4 @@
-<form name="form_manage_cars" id="form_manage_cars" action="index.php?frame=manage_cars" method="post">
+<form name="form_manage_cars" id="form_manage_cars" action="../templates/index.php" method="post">
 	<div id="manage_cars" class="ui-widget ui-state-default ui-corner-all">
 		<div id="divSelectCar" class="divcenterManage">
 			<select id="cbboxcar" name="cbboxcar" class="cbboxsubmit">

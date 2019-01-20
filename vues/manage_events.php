@@ -1,5 +1,6 @@
+
 <div id="manage_events_cars" class="ui-corner-all ui-widget ui-widget-content container-fluid">
-	<form name="form_manage_events" id="form_manage_events" action="index.php?frame=planning_vehicules" method="post">
+	<form name="form_manage_events" id="form_manage_events" action="../templates/index.php" method="post">
 		<div class="divcenter">
 			<label class="ui-widget-header ui-corner-all" for="cbboxusers">Utilisateur : </label>
 			<label class="ui-widget-header ui-corner-all" for="cbboxvoitures">Véhicule : </label>

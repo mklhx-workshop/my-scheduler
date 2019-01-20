@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Thing index{% endblock %}
+
+{% block body %}
+    <h1>Thing index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>IdentificationNumber</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for thing in things %}
+            <tr>
+                <td>{{ thing.id }}</td>
+                <td>{{ thing.identificationNumber }}</td>
+                <td>{{ thing.brand }}</td>
+                <td>{{ thing.model }}</td>
+                <td>
+                    <a href="{{ path('thing_show', {'id': thing.id}) }}">show</a>
+                    <a href="{{ path('thing_edit', {'id': thing.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('thing_new') }}">Create new</a>
+{% endblock %}

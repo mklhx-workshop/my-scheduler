@@ -1,4 +1,4 @@
-<form name="form_manage_devices" id="form_manage_devices" action="index.php?frame=manage_devices" method="post">
+<form name="form_manage_devices" id="form_manage_devices" action="../templates/index.php" method="post">
 	<div id="manage_devices" class="ui-widget ui-state-default ui-corner-all">
 		<div id="divSelectDevice" class="divcenterManage">
 			<select id="cbboxdevice" name="cbboxdevice" class="cbboxsubmit">

@@ -1,4 +1,4 @@
-<form name="form_manage_users" id="form_manage_users" action="index.php?frame=manage_users" method="post">
+<form name="form_manage_users" id="form_manage_users" action="../templates/index.php" method="post">
 	<div id="manage_users" class="ui-widget ui-corner-all ui-widget-content">
 		<div id="divSelectUser" class="divcenterManage">
 			<select id="cbboxuser" name="cbboxuser" class="cbboxsubmit">

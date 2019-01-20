@@ -1,4 +1,4 @@
-<form method="post" action="index.php">
+<form method="post" action="../templates/index.php">
 	<div id="vue_carnetbord" class="ui-widget ui-state-default ui-corner-all container-fluid">
 		<p style="color: red; font-size:30px;">Cette page est en phase de beta test</p>
 		Données carnets de bord du véhicule : <?php echo (isset($vcall['carId']))? '<a class="carnetDatas">'.$vcall['carId'].'</a>' : ''?><br/>

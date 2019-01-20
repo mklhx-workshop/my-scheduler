@@ -1,4 +1,4 @@
-<form id="form_logs" method="post" action="index.php?frame=logs">
+<form id="form_logs" method="post" action="../templates/index.php">
 	<div id="log_manage" class="ui-widget ui-corner-all ui-state-default container-fluid">
 		<div id="selectlog">
 			<select class="ui-widget ui-state-default ui-corner-all cbboxsubmit" name="cbboxlogs" id="cbboxlogs">

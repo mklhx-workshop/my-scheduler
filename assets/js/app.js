@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import 'fullcalendar';
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -12,3 +15,4 @@ require('../css/app.css');
 // var $ = require('jquery');
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+

@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}The best open source booking app!{% endblock %}
+{% block title %}The best open source scheduler app!{% endblock %}
 
 {% block body %}
-<h1>Welcome to scheduler</h1>
+    <div class="container">
+        <div class="row no-gutters justify-content-center">
+            <div class="col-12 text-center">
+                <h1 class="text-center">Welcome to scheduler</h1>
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

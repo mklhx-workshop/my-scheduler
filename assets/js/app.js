@@ -1,6 +1,3 @@
-import $ from 'jquery';
-import 'fullcalendar';
-
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -9,10 +6,19 @@ import 'fullcalendar';
  */
 
 // any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.css');
+// require('../css/app.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-// var $ = require('jquery');
-
+let $ = require('jquery');
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+require('fullcalendar');
+
+
+console.log("page is now ready, initialize the calendar...");
+console.log($("#calendar"));
+// $('#calendar').fullCalendar('today', {
+//     weekends: false,
+//     height: "parent"
+// });
 

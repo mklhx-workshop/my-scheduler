@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -20,5 +20,20 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+
+    public function accountInfo()
+    {
+        // allow any authenticated user - we don't care if they just
+        // logged in, or are logged in via a remember me cookie
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+    }
+
+    public function resetPassword()
+    {
+        // require the user to log in during *this* session
+        // if they were only logged in via a remember me cookie, they
+        // will be redirected to the login page
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
     }
 }

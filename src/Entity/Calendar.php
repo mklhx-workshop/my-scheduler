@@ -19,9 +19,9 @@ class Calendar
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="calendar")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="calendar")
      */
-    private $bookings;
+    private $events;
 
     /**
      * @ORM\Column(type="boolean")
@@ -34,10 +34,9 @@ class Calendar
     private $user;
 
 
-
     public function __construct()
     {
-        $this->bookings = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,27 +45,27 @@ class Calendar
     }
 
     /**
-     * @return Collection|Booking[]
+     * @return Collection|Event[]
      */
-    public function getBookings(): Collection
+    public function getEvents(): Collection
     {
-        return $this->bookings;
+        return $this->events;
     }
 
-    public function addBooking(Booking $booking): self
+    public function addEvent(Event $booking): self
     {
-        if (!$this->bookings->contains($booking)) {
-            $this->bookings[] = $booking;
+        if (!$this->events->contains($booking)) {
+            $this->events[] = $booking;
             $booking->setCalendar($this);
         }
 
         return $this;
     }
 
-    public function removeBooking(Booking $booking): self
+    public function removeEvent(Event $booking): self
     {
-        if ($this->bookings->contains($booking)) {
-            $this->bookings->removeElement($booking);
+        if ($this->events->contains($booking)) {
+            $this->events->removeElement($booking);
             // set the owning side to null (unless already changed)
             if ($booking->getCalendar() === $this) {
                 $booking->setCalendar(null);
@@ -86,5 +85,21 @@ class Calendar
         $this->activated = $activated;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
     }
 }

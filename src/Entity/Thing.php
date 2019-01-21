@@ -39,9 +39,9 @@ class Thing
     private $tags;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Booking", mappedBy="thing")
+     * @ORM\OneToOne(targetEntity="App\Entity\Event", mappedBy="thing")
      */
-    private $booking;
+    private $event;
 
     public function __construct()
     {
@@ -120,19 +120,19 @@ class Thing
         return $this;
     }
 
-    public function getThing(): ?Booking
+    public function getEvent(): ?Event
     {
-        return $this->booking;
+        return $this->event;
     }
 
-    public function setThing(?Booking $booking): self
+    public function setEvent(?Event $event): self
     {
-        $this->booking = $booking;
+        $this->event = $event;
 
         // set (or unset) the owning side of the relation if necessary
-        $newThing = $booking === null ? null : $this;
-        if ($newThing !== $booking->getThing()) {
-            $booking->setThing($newThing);
+        $newThing = $event === null ? null : $this;
+        if ($newThing !== $event->getThing()) {
+            $event->setThing($newThing);
         }
 
         return $this;

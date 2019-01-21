@@ -15,7 +15,7 @@ class ThingType extends AbstractType
             ->add('identificationNumber')
             ->add('brand')
             ->add('model')
-            ->add('booking')
+            ->add('event')
         ;
     }
 

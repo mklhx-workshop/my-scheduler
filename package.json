@@ -1,6 +1,15 @@
 {
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.6.3",
         "@symfony/webpack-encore": "^0.22.0",
+        "bootstrap": "^4.2.1",
+        "fullcalendar": "^3.10.0",
+        "jquery": "^3.3.1",
+        "jquery-mobile": "^1.5.0-alpha.1",
+        "moment": "^2.23.0",
+        "node-sass": "^4.11.0",
+        "popper.js": "^1.14.6",
+        "sass-loader": "7.0.1",
         "webpack-notifier": "^1.6.0"
     },
     "license": "UNLICENSED",
@@ -12,11 +21,6 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "bootstrap": "^4.2.1",
-        "fullcalendar": "^3.10.0",
-        "jquery": "^3.3.1",
-        "jquery-mobile": "^1.5.0-alpha.1",
-        "moment": "^2.23.0",
-        "popper.js": "^1.14.6"
+        "fullcalendar-scheduler": "^1.9.4"
     }
 }

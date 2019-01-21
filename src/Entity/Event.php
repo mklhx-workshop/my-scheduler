@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  */
-class Booking
+class Event
 {
     /**
      * @ORM\Id()
@@ -19,12 +19,12 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      */
-    private $dateStart;
+    private $start;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $dateEnd;
+    private $end;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -32,7 +32,7 @@ class Booking
     private $comment;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Thing", inversedBy="booking")
+     * @ORM\OneToOne(targetEntity="App\Entity\Thing", inversedBy="event")
      */
     private $thing;
 
@@ -46,26 +46,26 @@ class Booking
         return $this->id;
     }
 
-    public function getDateStart(): ?\DateTimeInterface
+    public function getStart(): ?\DateTimeInterface
     {
-        return $this->dateStart;
+        return $this->start;
     }
 
-    public function setDateStart(\DateTimeInterface $dateStart): self
+    public function setStart(\DateTimeInterface $start): self
     {
-        $this->dateStart = $dateStart;
+        $this->start = $start;
 
         return $this;
     }
 
-    public function getDateEnd(): ?\DateTimeInterface
+    public function getEnd(): ?\DateTimeInterface
     {
-        return $this->dateEnd;
+        return $this->end;
     }
 
-    public function setDateEnd(\DateTimeInterface $dateEnd): self
+    public function setEnd(\DateTimeInterface $end): self
     {
-        $this->dateEnd = $dateEnd;
+        $this->end = $end;
 
         return $this;
     }

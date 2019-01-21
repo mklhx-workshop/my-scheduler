@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Booking;
+use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Booking|null find($id, $lockMode = null, $lockVersion = null)
- * @method Booking|null findOneBy(array $criteria, array $orderBy = null)
- * @method Booking[]    findAll()
- * @method Booking[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Event|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Event|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Event[]    findAll()
+ * @method Event[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BookingRepository extends ServiceEntityRepository
+class EventRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Booking::class);
+        parent::__construct($registry, Event::class);
     }
 
     // /**
-    //  * @return Booking[] Returns an array of Booking objects
+    //  * @return Event[] Returns an array of Event objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class BookingRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Booking
+    public function findOneBySomeField($value): ?Event
     {
         return $this->createQueryBuilder('b')
             ->andWhere('b.exampleField = :val')

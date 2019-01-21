@@ -19,7 +19,7 @@ Encore
      */
     .addEntry('js/app', './assets/js/app.js')
     //.addEntry('page1', './assets/js/page1.js')
-    // .addStyleEntry('css/app', './assets/css/app.css')
+    .addStyleEntry('css/app', './assets/css/app.scss')
 
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
@@ -40,7 +40,7 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

@@ -9,17 +9,20 @@
 // require('../css/app.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
-let $ = require('jquery');
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+let $ = require("jquery");
+console.log("Hello Webpack Encore! Edit me in assets/js/app.js");
 
-require('popper.js');
-require('bootstrap');
-require('@fortawesome/fontawesome-free/js/all.js');
-require('moment');
-require('fullcalendar');
-require('fullcalendar-scheduler');
+require("popper.js");
+require("bootstrap");
+require("@fortawesome/fontawesome-free/js/all.js");
+require("moment");
 
-let $resources = [];
+// const FullCalendar = require("@fullcalendar/core");
+// const interaction = require("@fullcalendar/interaction");
+// const dayGrid = require("@fullcalendar/daygrid");
+// const timeGrid = require("@fullcalendar/timegrid");
+
+// let $resources = [];
 
 // let $events = [
 //     {
@@ -38,206 +41,289 @@ let $resources = [];
 //     }
 // ];
 
-$getTags = function () {
-    let tags = [];
-    $.ajax({
-        headers: {
-            Accept: "application/json"
-        },
-        url: '/api/tags',
-        success: function (t) {
-            $.each(t, function (index, tag) {
-                tags[index] = tag;
-            });
-            console.log("tags from $getTags");
-            console.log(tags);
-            $.each(tags, function (index, tag) {
-                $('#tags').append($("<option/>", {
-                    value: tag.id,
-                    text: tag.name
-                }));
-            });
-            return tags;
-        }
-    });
-};
-let $tags = $getTags();
+// const $getTags = () => {
+//   let tags = [];
+//   $.ajax({
+//     headers: {
+//       Accept: "application/json"
+//     },
+//     url: "/api/tags",
+//     success: function(t) {
+//       $.each(t, function(index, tag) {
+//         tags[index] = tag;
+//       });
+//       console.log("tags from $getTags");
+//       console.log(tags);
+//       $.each(tags, function(index, tag) {
+//         $("#tags").append(
+//           $("<option/>", {
+//             value: tag.id,
+//             text: tag.name
+//           })
+//         );
+//       });
+//       return tags;
+//     }
+//   });
+// };
 
-$getThings = function () {
-    let things = [];
-    $.ajax({
-        headers: {
-            Accept: "application/json"
-        },
-        url: '/api/things',
-        success: function (t) {
-            $.each(t, function (index, thing) {
-                things[index] = thing;
-            });
-            console.log("thing from $getThings");
-            console.log(things);
-            $.each(things, function (index, thing) {
-                $('#things').append($("<option/>", {
-                    value: thing.id,
-                    text: thing.brand + ' - ' + thing.model + ' - ' + thing.identificationNumber
-                }));
-            });
-            return things;
-        }
-    });
-};
-let $things = $getThings();
+// const $getThings = () => {
+//   let things = [];
+//   $.ajax({
+//     headers: {
+//       Accept: "application/json"
+//     },
+//     url: "/api/things",
+//     success: function(t) {
+//       $.each(t, function(index, thing) {
+//         things[index] = thing;
+//       });
+//       console.log("thing from $getThings");
+//       console.log(things);
+//       $.each(things, function(index, thing) {
+//         $("#things").append(
+//           $("<option/>", {
+//             value: thing.id,
+//             text:
+//               thing.brand +
+//               " - " +
+//               thing.model +
+//               " - " +
+//               thing.identificationNumber
+//           })
+//         );
+//       });
+//       return things;
+//     }
+//   });
+// };
 
-$getEvents = function () {
-    let events = [];
-    $.ajax({
-        headers: {
-            Accept: "application/json"
-        },
-        url: "/api/events/",
-        success: function (e) {
-            $.each(e, function (index, event) {
-                events[index] = event;
-            });
-            console.log("events from $getEvents");
-            console.log(events);
-            $.each(events, function (index, event) {
-                $('#tag').append($("<option/>", {
-                    value: event.id,
-                    text: event.name
-                }));
-            });
-            return events;
-        }
-    });
-};
-let $events = $getEvents();
+// const $getEvents = () => {
+//   let events = [];
+//   $.ajax({
+//     headers: {
+//       Accept: "application/json"
+//     },
+//     url: "/api/events/",
+//     success: function(e) {
+//       $.each(e, function(index, event) {
+//         events[index] = event;
+//       });
+//       console.log("events from $getEvents");
+//       console.log(events);
+//       $.each(events, function(index, event) {
+//         $("#tag").append(
+//           $("<option/>", {
+//             value: event.id,
+//             text: event.name
+//           })
+//         );
+//       });
+//       return events;
+//     }
+//   });
+// };
 
-$(function () {
-    $('input[type=date]').datetimepicker();
-    $('.calendar').fullCalendar(
-        {
-            schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-            // eventSources: [
-            //     {
-            events: $events,
-            //     }
-            // ],
-            // resources: $resources,
-            header: {
-                left: 'title',
-                center: 'month,agendaWeek,agendaDay',
-                bootstrapFontAwesome: {
-                    close: 'fa-times',
-                    prev: 'fa-chevron-left',
-                    next: 'fa-chevron-right',
-                    prevYear: 'fa-angle-double-left',
-                    nextYear: 'fa-angle-double-right'
-                }
-            },
-            themeSystem: 'bootstrap4',
-            // height: 'auto',
-            slotDuration: '00:15:00',
-            weekNumbers: true,
-            selectable: true,
-            dayClick: function (date, jsEvent, view) {
-                // change the day's background color just for fun
-                $(this).css('background-color', '#efefef');
-                $makeBooking($(this), date.format());
-            },
-            eventClick: function (calEvent, jsEvent, view) {
-                console.log('Event: ' + calEvent.title);
-                console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                console.log('View: ' + view.name);
+// $(function() {
+//   var calendarEl = $("#calendar-holder");
 
-                // change the border color just for fun
-                $(this).css('border-color', 'red');
+//   var calendar = new FullCalendar.Calendar(calendarEl, {
+    // defaultView: "dayGridMonth",
+    // editable: true,
+    // eventSources: $getEvents,
+    // [
+    //   {
+    //     url: "{{ path('fc_load_events') }}",
+    //     method: "POST",
+    //     extraParams: {
+    //       filters: JSON.stringify({})
+    //     },
+    //     failure: () => {
+    //       alert("There was an error while fetching FullCalendar!");
+    //     }
+    //   }
+    // ],
+    // header: {
+    //   left: "prev,next today",
+    //   center: "title",
+    //   right: "dayGridMonth,timeGridWeek,timeGridDay"
+    // },
+    // slotDuration: "00:15:00",
+    // weekNumbers: true,
+    // selectable: true,
+    // dayClick: (e) => {
+    //   // change the day's background color just for fun
+    //   console.debug("day: ");
+    //   console.debug(e);
+    //   // $(this).css("background-color", "#efefef");
+    //   // $makeBooking($(this), date.format());
+    // },
+    // eventClick: (e) => {
+    //   console.debug("event: ");
+    //   console.debug(e);
+    //   // change the border color just for fun
+    //   // $(this).css("border-color", "red");
+    // },
+    // views: {
+    //     month: { // name of view
+    //         titleFormat: 'MMMM Y'
+    //     },
+    //     week: { // name of view
+    //         titleFormat: 'D / MMMM / Y'
+    //     },
+    //     day: { // name of view
+    //         titleFormat: 'D MMMM Y'
+    //     }
+    // },
+  //   options: {
+  //     locale: "en",
+  //     isRTL: true
+  //   },
+  //   plugins: [interaction, dayGrid, timeGrid], // https://fullcalendar.io/docs/plugin-index
+  //   timeZone: "UTC"
+  // });
+  // calendar.render();
 
-            },
-            // views: {
-            //     month: { // name of view
-            //         titleFormat: 'MMMM Y'
-            //     },
-            //     week: { // name of view
-            //         titleFormat: 'D / MMMM / Y'
-            //     },
-            //     day: { // name of view
-            //         titleFormat: 'D MMMM Y'
-            //     }
-            // },
-            options: {
-                locale: 'en',
-                isRTL: true
-            }
-        });
+  // var calendarEl = $('#calendar');
 
-    $makeBooking = function (elm, date) {
-        $makeBookinModal = $('#makeBooking');
-        $makeBookinModal.modal('show');
-        $makeBookinModal.on('show.bs.modal', function () {
+  //   var calendar = new Calendar(calendarEl, {
+  //     plugins: [ dayGridPlugin ]
+  //   });
 
-        });
-        $makeBookinModal.on('shown.bs.modal', function () {
-            $(this).find('.modal-title').text(date);
-        });
-        $makeBookinModal.on('hidden.bs.modal', function () {
-            elm.css('background-color', 'white');
-        });
-    };
+  //   calendar.render();
 
-    // $('#create-event-form').on('submit', function (e) {
-    //     e.preventDefault();
-    //     console.log("create event clicked");
-    //     let dataSerialized = $('#create-event-form').serializeArray();
-    //     console.log("serialized data : ", dataSerialized);
-    //     let dataJson = JSON.stringify(dataSerialized);
-    //     console.log("json stringify data : ", dataJson);
-    //
-    //     let formData = {''};
-    //
-    //     $.ajax({
-    //         headers: {
-    //             Accept: "application/json"
-    //         },
-    //         url: '/api/events',
-    //         type: 'POST',
-    //         data: dataJson,
-    //         dataType: "json",
-    //         contentType: "application/json",
-    //         success: function (data) {
-    //             console.log("submitted data", data);
-    //             $('#makeBooking').modal('hide');
-    //         },
-    //         error: function (error) {
-    //             console.log("error : ", error);
-    //         }
-    //     });
-    //
-    // });
-    $('#tags').on('change', function () {
-        console.log('select #tags change');
-        $.ajax({
-            headers: {
-                Accept: "application/json"
-            },
-            url: '/api/things?tags.id=' + $(this).val(),
-            success: function (things) {
-                console.log(things);
-                if (things.length > 0) {
-                    $.each(things, function (index, thing) {
-                        $('#things').html("");
-                        $('#things').append($("<option/>", {
-                            value: thing.id,
-                            text: thing.brand + ' - ' + thing.model + ' - ' + thing.identificationNumber
-                        }));
-                    })
-                } else {
-                    $('#things').html("");
-                    $('#things').append($("<option/>", {
-                        text: "no things found for this tag"
-                    }));
-                }
-            }
-        });
-    });
-});
+  // $("input[type=date]").datetimepicker();
+
+  //   $(".calendar").fullCalendar({
+  //     schedulerLicenseKey: "GPL-My-Project-Is-Open-Source",
+  //     // eventSources: [
+  //     //     {
+  //     events: $events,
+  //     //     }
+  //     // ],
+  //     // resources: $resources,
+  //     header: {
+  //       left: "title",
+  //       center: "month,agendaWeek,agendaDay",
+  //       bootstrapFontAwesome: {
+  //         close: "fa-times",
+  //         prev: "fa-chevron-left",
+  //         next: "fa-chevron-right",
+  //         prevYear: "fa-angle-double-left",
+  //         nextYear: "fa-angle-double-right"
+  //       }
+  //     },
+  //     themeSystem: "bootstrap4",
+  //     // height: 'auto',
+  //     slotDuration: "00:15:00",
+  //     weekNumbers: true,
+  //     selectable: true,
+  //     dayClick: (date, jsEvent, view) => {
+  //       // change the day's background color just for fun
+  //       $(this).css("background-color", "#efefef");
+  //       $makeBooking($(this), date.format());
+  //     },
+  //     eventClick: (calEvent, jsEvent, view) => {
+  //       console.log("Event: " + calEvent.title);
+  //       console.log("Coordinates: " + jsEvent.pageX + "," + jsEvent.pageY);
+  //       console.log("View: " + view.name);
+
+  //       // change the border color just for fun
+  //       $(this).css("border-color", "red");
+  //     },
+  //     // views: {
+  //     //     month: { // name of view
+  //     //         titleFormat: 'MMMM Y'
+  //     //     },
+  //     //     week: { // name of view
+  //     //         titleFormat: 'D / MMMM / Y'
+  //     //     },
+  //     //     day: { // name of view
+  //     //         titleFormat: 'D MMMM Y'
+  //     //     }
+  //     // },
+  //     options: {
+  //       locale: "en",
+  //       isRTL: true
+  //     }
+  //   });
+
+  //   $makeBooking = (elm, date) => {
+  //     $makeBookinModal = $("#makeBooking");
+  //     $makeBookinModal.modal("show");
+  //     $makeBookinModal.on("show.bs.modal", function() {});
+  //     $makeBookinModal.on("shown.bs.modal", function() {
+  //       $(this)
+  //         .find(".modal-title")
+  //         .text(date);
+  //     });
+  //     $makeBookinModal.on("hidden.bs.modal", function() {
+  //       elm.css("background-color", "white");
+  //     });
+  //   };
+
+  // $('#create-event-form').on('submit', function (e) {
+  //     e.preventDefault();
+  //     console.log("create event clicked");
+  //     let dataSerialized = $('#create-event-form').serializeArray();
+  //     console.log("serialized data : ", dataSerialized);
+  //     let dataJson = JSON.stringify(dataSerialized);
+  //     console.log("json stringify data : ", dataJson);
+
+  //     let formData = {''};
+
+  //     $.ajax({
+  //         headers: {
+  //             Accept: "application/json"
+  //         },
+  //         url: '/api/events',
+  //         type: 'POST',
+  //         data: dataJson,
+  //         dataType: "json",
+  //         contentType: "application/json",
+  //         success: function (data) {
+  //             console.log("submitted data", data);
+  //             $('#makeBooking').modal('hide');
+  //         },
+  //         error: function (error) {
+  //             console.log("error : ", error);
+  //         }
+  //     });
+
+  // });
+  //   $("#tags").on("change", () => {
+  //     console.log("select #tags change");
+  //     $.ajax({
+  //       headers: {
+  //         Accept: "application/json"
+  //       },
+  //       url: "/api/things?tags.id=" + $(this).val(),
+  //       success: things => {
+  //         console.log(things);
+  //         if (things.length > 0) {
+  //           $.each(things, (index, thing) => {
+  //             $("#things").html("");
+  //             $("#things").append(
+  //               $("<option/>", {
+  //                 value: thing.id,
+  //                 text:
+  //                   thing.brand +
+  //                   " - " +
+  //                   thing.model +
+  //                   " - " +
+  //                   thing.identificationNumber
+  //               })
+  //             );
+  //           });
+  //         } else {
+  //           $("#things").html("");
+  //           $("#things").append(
+  //             $("<option/>", {
+  //               text: "no things found for this tag"
+  //             })
+  //           );
+  //         }
+  //       }
+  //     });
+  //   });
+// });

@@ -51,7 +51,8 @@
         <div class="container-fluid">
             <div class="row no-gutters">
                 <div class="col-12 pt-5">
-                    {% block body %}{% endblock %}
+                    {% block body %}
+                    {% endblock %}
                 </div>
             </div>
         </div>
@@ -59,7 +60,7 @@
 </main>
 <footer class="fixed-bottom">
     {% block footer %}
-        <div class="text-left ml-2">
+        <div class="text-center mx-auto">
             <p>Made with <i class="fas fa-heart text-danger"></i> by
                 <a href="https://github.com/MkLHX/scheduler">MkLHX</a><br>
                 <span class="mt-5 mb-3 text-muted text-center">©2019</span>

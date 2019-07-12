@@ -11,8 +11,9 @@
 <header>
     {% block navbar %}
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-2 shadow">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('home') }}"><i class="far fa-calendar-alt"></i>
-                Scheduler</a>
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('home') }}">
+                <i class="far fa-calendar-alt"></i> Scheduler
+            </a>
             {% if is_granted("ROLE_ADMIN") %}
                 <input class="form-control form-control-dark w-100" type="text" placeholder="Search"
                        aria-label="Search">
@@ -20,7 +21,15 @@
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
                     {% if is_granted("ROLE_USER") %}
-                        <a class="nav-link" href="{{ path('logout') }}">Sign out</a>
+                        <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item text-nowrap">
+                                {#<a class="btn btn-outline-secondary" href="{{ path('profile') }}">Profile</a>#}
+                            </li>
+                            <li class="list-inline-item text-nowrap text-white">/</li>
+                            <li class="list-inline-item text-nowrap">
+                                <a class="btn btn-outline-secondary" href="{{ path('logout') }}">Sign out</a>
+                            </li>
+                        </ul>
                     {% else %}
                         <ul class="list-unstyled list-inline">
                             <li class="list-inline-item text-nowrap">
@@ -48,10 +57,13 @@
         </div>
     {% endblock %}
 </main>
-<footer>
+<footer class="fixed-bottom">
     {% block footer %}
-        <div class="text-center my-5">
-            <p>Made with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/MkLHX/scheduler">MkLHX</a></p>
+        <div class="text-left ml-2">
+            <p>Made with <i class="fas fa-heart text-danger"></i> by
+                <a href="https://github.com/MkLHX/scheduler">MkLHX</a><br>
+                <span class="mt-5 mb-3 text-muted text-center">©2019</span>
+            </p>
         </div>
     {% endblock %}
 </footer>

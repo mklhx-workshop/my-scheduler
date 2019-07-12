@@ -13,6 +13,4 @@ templates/vues/*
 
 Migrations/*
 
-var/cache/dev/
-var/cache/log/
-var/log
+var/*

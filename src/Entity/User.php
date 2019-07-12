@@ -7,8 +7,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
@@ -42,21 +44,35 @@ class User implements UserInterface
      */
     private $calendars;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->calendars = new ArrayCollection();
+        $this->roles = ['ROLE_USER'];
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return User
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -86,6 +102,10 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return User
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -101,6 +121,10 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return User
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -133,23 +157,31 @@ class User implements UserInterface
         return $this->calendars;
     }
 
+    /**
+     * @param Calendar $calendar
+     * @return User
+     */
     public function addCalendar(Calendar $calendar): self
     {
         if (!$this->calendars->contains($calendar)) {
             $this->calendars[] = $calendar;
-            $calendar->setCalendars($this);
+            $calendar->setUser($this);
         }
 
         return $this;
     }
 
+    /**
+     * @param Calendar $calendar
+     * @return User
+     */
     public function removeCalendar(Calendar $calendar): self
     {
         if ($this->calendars->contains($calendar)) {
             $this->calendars->removeElement($calendar);
             // set the owning side to null (unless already changed)
-            if ($calendar->getCalendars() === $this) {
-                $calendar->setCalendars(null);
+            if ($calendar->getUser() === $this) {
+                $calendar->setUser(null);
             }
         }
 

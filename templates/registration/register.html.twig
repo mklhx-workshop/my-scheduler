@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row justify-content-center">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3 w-100">
             {{ form_start(registrationForm) }}
             <div class="text-center mb-4">
                 <i class="fas fa-user-edit fa-6x my-4"></i>
@@ -12,13 +12,14 @@
                 <p>Create you're account.</p>
             </div>
             <div class="form-label-group mb-3">
-                {{ form_row(registrationForm.email, {'attr':{'class':'form-control', 'required':'required', 'autofocus':'autofocus'}}) }}
+                {{ form_widget(registrationForm.email,{'attr':{'class':'form-control', 'required':'required', 'autofocus':'autofocus'}}) }}
+                <label for="registration_form_email">Email</label>
             </div>
             <div class="form-label-group mb-3">
-                {{ form_row(registrationForm.plainPassword, {'attr':{'class':'form-control', 'required':'required', 'autofocus':'autofocus'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr':{'class':'form-control', 'required':'required', 'autofocus':'autofocus'}}) }}
+                <label for="registration_form_plainPassword">Password</label>
             </div>
             <button class="btn btn-dark btn-lg btn-block">Register</button>
-            <p class="mt-5 mb-3 text-muted text-center">© 2019</p>
             {{ form_errors(registrationForm) }}
             {{ form_end(registrationForm) }}
         </div>

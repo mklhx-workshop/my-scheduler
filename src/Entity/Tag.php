@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,20 +26,38 @@ class Tag
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Thing", inversedBy="tags")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Thing", inversedBy="tags")
      */
-    private $thing;
+    private $things;
 
+    /**
+     * Tag constructor.
+     */
+    public function __construct()
+    {
+        $this->things = new ArrayCollection();
+    }
+
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return Tag
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -45,15 +65,39 @@ class Tag
         return $this;
     }
 
-    public function getThing(): ?Thing
+    /**
+     * @return Collection
+     */
+    public function getThings(): Collection
     {
-        return $this->thing;
+        return $this->things;
     }
 
-    public function setThing(?Thing $thing): self
+    /**
+     * @param Thing $thing
+     * @return Tag
+     */
+    public function addThing(Thing $thing): self
     {
-        $this->thing = $thing;
+        if (!$this->things->contains($thing)) {
+            $this->things[] = $thing;
+            $thing->addTag($this);
+        }
 
         return $this;
     }
+
+    /**
+     * @param Thing $thing
+     * @return Tag
+     */
+    public function removeThing(Thing $thing): self
+    {
+        if ($this->things->contains($thing)) {
+            $this->things->removeElement($thing);
+        }
+
+        return $this;
+    }
+
 }

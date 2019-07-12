@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  */
 class Event
@@ -37,20 +39,30 @@ class Event
     private $thing;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Calendar", inversedBy="bookings")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Calendar", inversedBy="events")
      */
     private $calendar;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getStart(): ?\DateTimeInterface
     {
         return $this->start;
     }
 
+    /**
+     * @param \DateTimeInterface $start
+     * @return Event
+     */
     public function setStart(\DateTimeInterface $start): self
     {
         $this->start = $start;
@@ -58,11 +70,18 @@ class Event
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getEnd(): ?\DateTimeInterface
     {
         return $this->end;
     }
 
+    /**
+     * @param \DateTimeInterface $end
+     * @return Event
+     */
     public function setEnd(\DateTimeInterface $end): self
     {
         $this->end = $end;
@@ -70,11 +89,18 @@ class Event
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getComment(): ?string
     {
         return $this->comment;
     }
 
+    /**
+     * @param null|string $comment
+     * @return Event
+     */
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
@@ -82,11 +108,18 @@ class Event
         return $this;
     }
 
+    /**
+     * @return Thing|null
+     */
     public function getThing(): ?Thing
     {
         return $this->thing;
     }
 
+    /**
+     * @param Thing|null $thing
+     * @return Event
+     */
     public function setThing(?Thing $thing): self
     {
         $this->thing = $thing;
@@ -94,11 +127,18 @@ class Event
         return $this;
     }
 
+    /**
+     * @return Calendar|null
+     */
     public function getCalendar(): ?Calendar
     {
         return $this->calendar;
     }
 
+    /**
+     * @param Calendar|null $calendar
+     * @return Event
+     */
     public function setCalendar(?Calendar $calendar): self
     {
         $this->calendar = $calendar;

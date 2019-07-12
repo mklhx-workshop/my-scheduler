@@ -7,22 +7,22 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ event.id }}</td>
-            </tr>
-            <tr>
-                <th>DateStart</th>
-                <td>{{ event.dateStart ? event.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DateEnd</th>
-                <td>{{ event.dateEnd ? event.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Comment</th>
-                <td>{{ event.comment }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ event.id }}</td>
+        </tr>
+        <tr>
+            <th>DateStart</th>
+            <td>{{ event.start ? event.start|localizeddate('medium','short') : '' }}</td>
+        </tr>
+        <tr>
+            <th>DateEnd</th>
+            <td>{{ event.end ? event.end|localizeddate('medium','short') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Comment</th>
+            <td>{{ event.comment }}</td>
+        </tr>
         </tbody>
     </table>
 

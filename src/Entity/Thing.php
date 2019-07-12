@@ -2,11 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
+ * @ApiFilter(SearchFilter::class, properties={"tags.id":"exact","tags.name":"exact"})
  * @ORM\Entity(repositoryClass="App\Repository\ThingRepository")
  */
 class Thing
@@ -34,7 +39,7 @@ class Thing
     private $model;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tag", mappedBy="thing")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", mappedBy="things")
      */
     private $tags;
 
@@ -43,21 +48,34 @@ class Thing
      */
     private $event;
 
+    /**
+     * Thing constructor.
+     */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getIdentificationNumber(): ?string
     {
         return $this->identificationNumber;
     }
 
+    /**
+     * @param string $identificationNumber
+     * @return Thing
+     */
     public function setIdentificationNumber(string $identificationNumber): self
     {
         $this->identificationNumber = $identificationNumber;
@@ -65,11 +83,18 @@ class Thing
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getBrand(): ?string
     {
         return $this->brand;
     }
 
+    /**
+     * @param string $brand
+     * @return Thing
+     */
     public function setBrand(string $brand): self
     {
         $this->brand = $brand;
@@ -77,11 +102,18 @@ class Thing
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getModel(): ?string
     {
         return $this->model;
     }
 
+    /**
+     * @param string $model
+     * @return Thing
+     */
     public function setModel(string $model): self
     {
         $this->model = $model;
@@ -97,34 +129,45 @@ class Thing
         return $this->tags;
     }
 
+    /**
+     * @param Tag $tag
+     * @return Thing
+     */
     public function addTag(Tag $tag): self
     {
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
-            $tag->setThing($this);
+            $tag->addThing($this);
         }
 
         return $this;
     }
 
+    /**
+     * @param Tag $tag
+     * @return Thing
+     */
     public function removeTag(Tag $tag): self
     {
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
-            // set the owning side to null (unless already changed)
-            if ($tag->getThing() === $this) {
-                $tag->setThing(null);
-            }
         }
 
         return $this;
     }
 
+    /**
+     * @return Event|null
+     */
     public function getEvent(): ?Event
     {
         return $this->event;
     }
 
+    /**
+     * @param Event|null $event
+     * @return Thing
+     */
     public function setEvent(?Event $event): self
     {
         $this->event = $event;

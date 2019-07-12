@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Thing;
 use App\Form\ThingType;
 use App\Repository\ThingRepository;

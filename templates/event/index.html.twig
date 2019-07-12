@@ -7,20 +7,20 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>Comment</th>
-                <th>ctions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Comment</th>
+            <th>ctions</th>
+        </tr>
         </thead>
         <tbody>
         {% for event in events %}
             <tr>
                 <td>{{ event.id }}</td>
-                <td>{{ event.dateStart ? event.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ event.dateEnd ? event.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ event.start ? event.start|localizeddate('medium', 'short'): '' }}</td>
+                <td>{{ event.end ? event.end|localizeddate('medium', 'short'): '' }}</td>
                 <td>{{ event.comment }}</td>
                 <td>
                     <a href="{{ path('event_show', {'id': event.id}) }}">show</a>

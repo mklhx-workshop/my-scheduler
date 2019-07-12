@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\CalendarRepository")
  */
 class Calendar
@@ -19,14 +21,14 @@ class Calendar
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="calendar")
-     */
-    private $events;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $activated;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="calendar")
+     */
+    private $events;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="calendars")

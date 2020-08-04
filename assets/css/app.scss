@@ -1,11 +1,15 @@
 @import "~bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url("https://fonts.googleapis.com/css?family=Lobster");
+
+@import "~@fullcalendar/core/main.min.css";
+@import "~@fullcalendar/daygrid/main.min.css";
+@import "~@fullcalendar/timegrid/main.min.css";
 
 /** colors **/
 //$grey = #E7E7E7E7;
 
 body {
-  font-family: 'Lobster', cursive !important;
+  font-family: "Lobster", cursive !important;
   background-color: whitesmoke;
 }
 
@@ -19,19 +23,20 @@ body {
 
 .form-label-group input:not(:placeholder-shown) {
   padding-top: 1.25rem;
-  padding-bottom: .25rem;
+  padding-bottom: 0.25rem;
 }
 
 .form-label-group input:not(:placeholder-shown) ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   font-size: 12px;
   color: #777;
 }
 
-.form-label-group > input, .form-label-group > label {
+.form-label-group > input,
+.form-label-group > label {
   height: 3.125rem;
-  padding: .75rem;
+  padding: 0.75rem;
 }
 
 .form-label-group > label {
@@ -46,6 +51,6 @@ body {
   pointer-events: none;
   cursor: text;
   border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
 }

@@ -1,74 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href='{{ asset('build/css/app.css') }}'>
-    <title>{% block title %}Scheduler!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-<header>
-    {% block navbar %}
-        <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-2 shadow">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('home') }}">
-                <i class="far fa-calendar-alt"></i> Scheduler
-            </a>
-            {% if is_granted("ROLE_ADMIN") %}
-                <input class="form-control form-control-dark w-100" type="text" placeholder="Search"
-                       aria-label="Search">
-            {% endif %}
-            <ul class="navbar-nav px-3">
-                <li class="nav-item text-nowrap">
-                    {% if is_granted("ROLE_USER") %}
-                        <ul class="list-unstyled list-inline">
-                            <li class="list-inline-item text-nowrap">
-                                {#<a class="btn btn-outline-secondary" href="{{ path('profile') }}">Profile</a>#}
-                            </li>
-                            <li class="list-inline-item text-nowrap text-white">/</li>
-                            <li class="list-inline-item text-nowrap">
-                                <a class="btn btn-outline-secondary" href="{{ path('logout') }}">Sign out</a>
-                            </li>
-                        </ul>
-                    {% else %}
-                        <ul class="list-unstyled list-inline">
-                            <li class="list-inline-item text-nowrap">
-                                <a class="btn btn-outline-secondary" href="{{ path('login') }}">Sign in</a>
-                            </li>
-                            <li class="list-inline-item text-nowrap text-white">/</li>
-                            <li class="list-inline-item text-nowrap">
-                                <a class="btn btn-outline-secondary" href="{{ path('register') }}">Sign up</a>
-                            </li>
-                        </ul>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no" name="viewport">
+        <link rel="stylesheet" href='{{ asset('build/css/app.css') }}'>
+        <title>
+            {% block title %}Scheduler!
+            {% endblock %}
+        </title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            {% block navbar %}
+                <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-2 shadow">
+                    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('home') }}">
+                        <i class="far fa-calendar-alt"></i>
+                        Scheduler
+                    </a>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <input aria-label="Search" class="form-control form-control-dark w-100" placeholder="Search" type="text">
                     {% endif %}
-                </li>
-            </ul>
-        </nav>
-    {% endblock %}
-</header>
-<main>
-    {% block outer_body %}
-        <div class="container-fluid">
-            <div class="row no-gutters">
-                <div class="col-12 pt-5">
-                    {% block body %}
-                    {% endblock %}
+                    <ul class="navbar-nav px-3">
+                        <li class="nav-item text-nowrap">
+                            {% if is_granted("ROLE_USER") %}
+                                <ul class="list-unstyled list-inline">
+                                    <li
+                                        class="list-inline-item text-nowrap">{#<a class="btn btn-outline-secondary" href="{{ path('profile') }}">Profile</a>#}
+                                    </li>
+                                    <li class="list-inline-item text-nowrap text-white">/</li>
+                                    <li class="list-inline-item text-nowrap">
+                                        <a class="btn btn-outline-secondary" href="{{ path('logout') }}">Sign out</a>
+                                    </li>
+                                </ul>
+                            {% else %}
+                                <ul class="list-unstyled list-inline">
+                                    <li class="list-inline-item text-nowrap">
+                                        <a class="btn btn-outline-secondary" href="{{ path('login') }}">Sign in</a>
+                                    </li>
+                                    <li class="list-inline-item text-nowrap text-white">/</li>
+                                    <li class="list-inline-item text-nowrap">
+                                        <a class="btn btn-outline-secondary" href="{{ path('register') }}">Sign up</a>
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </nav>
+            {% endblock %}
+        </header>
+        <main>
+            {% block outer_body %}
+                <div class="container-fluid">
+                    <div class="row no-gutters">
+                        <div class="col-12 pt-5">
+                            {% block body %}{% endblock %}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    {% endblock %}
-</main>
-<footer class="fixed-bottom">
-    {% block footer %}
-        <div class="text-center mx-auto">
-            <p>Made with <i class="fas fa-heart text-danger"></i> by
-                <a href="https://github.com/MkLHX/scheduler">MkLHX</a><br>
-                <span class="mt-5 mb-3 text-muted text-center">©2019</span>
-            </p>
-        </div>
-    {% endblock %}
-</footer>
-{% block javascripts %}{% endblock %}
-</body>
-<script src='{{ asset('build/js/app.js') }}'></script>
+            {% endblock %}
+        </main>
+        <footer class="fixed-bottom">
+            {% block footer %}
+                <div class="text-center mx-auto">
+                    <p>Made with
+                        <i class="fas fa-heart text-danger"></i>
+                        by
+                        <a href="https://github.com/MkLHX/scheduler">MkLHX</a><br>
+                        <span class="mt-5 mb-3 text-muted text-center">©2019</span>
+                    </p>
+                </div>
+            {% endblock %}
+        </footer>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('js/app') }}
+        {% endblock %}
+    </body>
 </html>

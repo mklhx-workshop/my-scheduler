@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-3 w-100">
+            {{ form_start(registrationForm) }}
+            <div class="text-center mb-4">
+                <i class="fas fa-user-edit fa-6x my-4"></i>
+                <h1 class="mb-4 font-weight-normal">Sign up</h1>
+                <p>Create you're account.</p>
+            </div>
+            <div class="form-label-group mb-3">
+                {{ form_widget(registrationForm.email,{'attr':{'class':'form-control', 'required':'required', 'autofocus':'autofocus'}}) }}
+                <label for="registration_form_email">Email</label>
+            </div>
+            <div class="form-label-group mb-3">
+                {{ form_widget(registrationForm.plainPassword, {'attr':{'class':'form-control', 'required':'required', 'autofocus':'autofocus'}}) }}
+                <label for="registration_form_plainPassword">Password</label>
+            </div>
+            <button class="btn btn-dark btn-lg btn-block">Register</button>
+            {{ form_errors(registrationForm) }}
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

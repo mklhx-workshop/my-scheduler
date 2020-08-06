@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block body %}
+    <h1>Calendar</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ calendar.id }}</td>
+        </tr>
+        <tr>
+            <th>Activated</th>
+            <td>{{ calendar.activated ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            {% for event in calendar.events %}
+                <td>
+                <th>start</th>
+                <td>{{ event.start?event.start|localizeddate('medium','short') }}</td>
+                <th>end</th>
+                <td>{{ event.end|localizeddate('short','short') }}</td>
+                </td>
+                <th>comment</th>
+                <td>{{ event.comment|truncate(50) }}</td>
+                </td>
+            {% else %}
+                <th>no records found</th>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('calendar_index') }}">back to list</a>
+
+    <a href="{{ path('calendar_edit', {'id': calendar.id}) }}">edit</a>
+
+    {{ include('calendar/_delete_form.html.twig') }}
+{% endblock %}

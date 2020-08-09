@@ -1,4 +1,18 @@
 {
+    "api-platform/admin-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "488ebfb0cddd283c16f4d072c6675ae7d7d52eb4"
+        },
+        "files": [
+            "./assets/js/admin.js",
+            "./config/routes/api_platform_admin.yaml",
+            "./templates/admin.html.twig"
+        ]
+    },
     "api-platform/api-pack": {
         "version": "v1.2.2"
     },
@@ -18,21 +32,6 @@
     },
     "composer/package-versions-deprecated": {
         "version": "1.10.99"
-    },
-    "composer/semver": {
-        "version": "3.0.0"
-    },
-    "composer/xdebug-handler": {
-        "version": "1.4.2"
-    },
-    "dama/doctrine-test-bundle": {
-        "version": "4.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "4.0",
-            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
-        }
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -55,9 +54,6 @@
     "doctrine/common": {
         "version": "2.13.3"
     },
-    "doctrine/data-fixtures": {
-        "version": "1.4.3"
-    },
     "doctrine/dbal": {
         "version": "2.10.2"
     },
@@ -74,18 +70,6 @@
             "./config/packages/prod/doctrine.yaml",
             "./src/Entity/.gitignore",
             "./src/Repository/.gitignore"
-        ]
-    },
-    "doctrine/doctrine-fixtures-bundle": {
-        "version": "3.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "3.0",
-            "ref": "fc52d86631a6dfd9fdf3381d0b7e3df2069e51b3"
-        },
-        "files": [
-            "./src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -217,6 +201,15 @@
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.3"
+    },
+    "symfony/apache-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "71599f5b0fdeeeec0fb90e9b17c85e6f5e1350c1"
+        }
     },
     "symfony/asset": {
         "version": "v5.0.11"
@@ -389,9 +382,6 @@
     "symfony/polyfill-php80": {
         "version": "v1.18.1"
     },
-    "symfony/process": {
-        "version": "v5.0.11"
-    },
     "symfony/property-access": {
         "version": "v5.0.11"
     },
@@ -539,6 +529,15 @@
     },
     "symfony/yaml": {
         "version": "v5.0.11"
+    },
+    "tattali/calendar-bundle": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.1",
+            "ref": "0c643e17b5340747b35c2c75e11727fa31bfa9bb"
+        }
     },
     "twig/extensions": {
         "version": "1.0",

@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block body %}
-	<div id="calendar-holder" class="mt-5"></div>
+	<div id="calendar-holder"></div>
 	{# {% include '@Calendar/calendar.html' %} #}
 	{# <div class="row justify-content-center">
 			<div class="col-12 py-4 text-center">
@@ -92,9 +92,7 @@
 <script>
 
 document.addEventListener('DOMContentLoaded', () => {
-	console.debug("calendar loaded");
 	var calendarEl = document.getElementById('calendar-holder');
-
 	var calendar = new FullCalendar.Calendar(calendarEl, {
 		defaultView: 'dayGridMonth',
 		editable: true,

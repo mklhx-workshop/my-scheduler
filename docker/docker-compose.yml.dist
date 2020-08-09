@@ -1,7 +1,10 @@
 version: "3.7"
 services:
+  
+  # mysql configuration
   mysql:
     image: mysql:5.7.23
+    restart: on-failure
     container_name: scheduler-mysql
     working_dir: /
     volumes:
@@ -13,12 +16,18 @@ services:
       - MYSQL_USER=${MYSQL_USER:-root}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-root}
     ports:
-      - "33065:3306"
-
+      - "${MYSQL_PORT:-3306}:3306"
+  
+  # php configuration
   php:
-    image: php:7.3.15
-    container_name: scheduler-php
-    working_dir: /
-    
-  apache:
-    image: http:2.4
+    image: my-scheduler-php-apache
+    container_name: scheduler-php-apache
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: docker/build/php/Dockerfile
+    # working_dir: /
+    volumes:
+      - './apps/my-scheduler/public/:/usr/src/app'
+    env_file:
+      - .env

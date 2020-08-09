@@ -1,0 +1,82 @@
+version: "3.7"
+services:
+  
+  # mysql configuration
+  mysql:
+    image: mysql:5.7.23
+    restart: on-failure
+    container_name: ${PROJECT_NAME}-mysql
+    working_dir: /
+    volumes:
+      - .:/application
+      - c:/mysql/${PROJECT_NAME}/:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_DATABASE=${MYSQL_DATABASE_NAME}
+      - MYSQL_USER=${MYSQL_USER:-root}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-root}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    env_file:
+      - .env
+    networks:
+      - shadow
+  
+  # php configuration
+  php:
+    image: ${PROJECT_NAME}-php
+    container_name: ${PROJECT_NAME}-php
+    depends_on:
+      - mysql
+    restart: on-failure
+    build:
+      context: ../
+      dockerfile: ./docker/php/Dockerfile
+    working_dir: /
+    volumes:
+      - ../app/:/home/${PROJECT_NAME}
+      # - ./docker/php/php.ini
+      # - ./docker/apache/${PROJECT_NAME}-vhost.conf:/etc/apache2/sites-available/${PROJECT_NAME}-vhost.conf
+    environment:
+      - PROJECT_NAME=${PROJECT_NAME}
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:${MYSQL_PORT}/${MYSQL_DATABASE_NAME}?serverVersion=5.7
+    env_file:
+      - ../app/.env
+    networks:
+      - shadow
+  
+  # apache configuration  
+  # apache:
+  #   image: ${PROJECT_NAME}-apache
+  #   container_name: ${PROJECT_NAME}-apache
+  #   # depends_on:
+  #   #   - php
+  #   restart: on-failure
+  #   build:
+  #     context: ../
+  #     dockerfile: ./docker/apache/Dockerfile
+  #   working_dir: /
+  #   ports:
+  #     - '80:80'
+  #     - '443:443'
+  #   volumes:
+  #     - ../app/:/home/${PROJECT_NAME}
+  #     - ./docker/apache/${PROJECT_NAME}-vhost.conf:/etc/apache2/sites-available/${PROJECT_NAME}-vhost.conf
+      # - ./docker/apache/000-default-le-ssl.conf:/etc/apache2/sites-enabled/000-default-le-ssl.conf
+
+  # apache:
+  #   build: ./docker/apache
+  #   container_name: ${PROJECT_NAME}_apache
+  #   volumes:
+  #     - ./docker/config/vhosts:/etc/apache2/sites-enabled
+  #     - ./site:/home/wwwroot
+  #   depends_on:
+  #     - php
+  #   networks:
+  #     - internal
+  #   restart: always
+
+networks:
+  shadow:

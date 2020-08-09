@@ -1,4 +1,6 @@
 {
-  "build/css/app.css": "/build/css/app.css",
-  "build/js/app.js": "/build/js/app.js"
+  "build/admin.js": "http://localhost:8080/build/admin.js",
+  "build/css/app.css": "http://localhost:8080/build/css/app.css",
+  "build/js/app.js": "http://localhost:8080/build/js/app.js",
+  "build/runtime.js": "http://localhost:8080/build/runtime.js"
 }

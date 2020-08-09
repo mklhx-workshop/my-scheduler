@@ -1,17 +1,37 @@
-version: "3.1"
+version: "3.7"
 services:
-
-    mysql:
-      image: mysql:5.7.23
-      container_name: scheduler-mysql
-      working_dir: /
-      volumes:
-        - .:/application
-        - c:/mysql/scheduler/:/var/lib/mysql
-      environment:
-        - MYSQL_ROOT_PASSWORD=root
-        - MYSQL_DATABASE=scheduler
-        - MYSQL_USER=root
-        - MYSQL_PASSWORD=root
-      ports:
-        - "33065:3306"
+  
+  # mysql configuration
+  mysql:
+    image: mysql:5.7.23
+    container_name: scheduler-mysql
+    working_dir: /
+    volumes:
+      - .:/application
+      - c:/mysql/scheduler/:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_DATABASE=${MYSQL_DATABASE_NAME:-scheduler}
+      - MYSQL_USER=${MYSQL_USER:-root}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-root}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+  
+  # php configuration
+  php:
+    image: php:7.3.15
+    container_name: scheduler-php
+    working_dir: /
+    build:
+      context: .
+      dockerfile: docker/build/php/Dockerfile
+  
+  # apache configuration
+  # apache:
+  #   # image: http:2.4
+  #   # build: docker/build/apache
+  #   build:
+  #     context: .
+  #     dockerfile: docker/build/apache/Dockerfile
+  #   ports:
+  #     - '80:80'

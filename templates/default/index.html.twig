@@ -1,242 +1,133 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-	{# <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css" rel="stylesheet">
-			    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css" rel="stylesheet">
-			    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css" rel="stylesheet"> #}
+	{{ parent() }}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
 {% endblock %}
-
-{# {% block javascripts %}
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
-    <script type="text/javascript">
-        const $getTags = () => {
-            let tags = [];
-            $.ajax({
-                headers: {
-                    Accept: "application/json"
-                },
-                url: "/api/tags",
-                success: (t) => {
-                    $.each(t, (index, tag) => {
-                        tags[index] = tag;
-                    });
-                    console.log("tags from $getTags");
-                    console.log(tags);
-                    $.each(tags, (index, tag) => {
-                        $("#tags").append($("<option/>", {
-                            value: tag.id,
-                            text: tag.name
-                        }));
-                    });
-                    return tags;
-                }
-            });
-        };
-
-        const $getThings = () => {
-            let things = [];
-            $.ajax({
-                headers: {
-                    Accept: "application/json"
-                },
-                url: "/api/things",
-                success: (t) => {
-                    $.each(t, (index, thing) => {
-                        things[index] = thing;
-                    });
-                    console.log("thing from $getThings");
-                    console.log(things);
-                    $.each(things, (index, thing) => {
-                        $("#things").append($("<option/>", {
-                            value: thing.id,
-                            text: thing.brand + " - " + thing.model + " - " + thing.identificationNumber
-                        }));
-                    });
-                    return things;
-                }
-            });
-        };
-
-        const $getEvents = () => {
-            let events = [];
-            $.ajax({
-                headers: {
-                    Accept: "application/json"
-                },
-                url: "/api/events/",
-                success: (e) => {
-                    $.each(e, (index, event) => {
-                        events[index] = event;
-                    });
-                    console.log("events from $getEvents");
-                    console.log(events);
-                    $.each(events, (index, event) => {
-                        $("#tag").append($("<option/>", {
-                            value: event.id,
-                            text: event.name
-                        }));
-                    });
-                    return events;
-                }
-            });
-        };
-
-        const _openModal = (e) => {
-            // const $makeBookingModal = document.getElementById('makeBooking');
-            const $makeBookingModal = $('#makeBooking');
-            $makeBookingModal.modal("show");
-            // $makeBookinModal.on("show.bs.modal", () => {});
-            // $makeBookinModal.on("shown.bs.modal", () => { // $(this).find(".modal-title").text(date);
-            // });
-            // $makeBookinModal.on("hidden.bs.modal", () => { // elm.css("background-color", "white");
-            // });
-        };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            var calendarEl = document.getElementById('calendar-holder');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                defaultView: 'dayGridMonth',
-                editable: true,
-                eventSources: [
-                    {
-                        url: "{{ path('fc_load_events') }}",
-                        method: "POST",
-                        extraParams: {
-                            filters: JSON.stringify({})
-                        },
-                        failure: () => { // alert("There was an error while fetching FullCalendar!");
-                        }
-                    },
-                ],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                slotDuration: "00:15:00",
-                weekNumbers: true,
-                selectable: true,
-                dateClick: (e) => { // change the day's background color just for fun
-                    console.debug("day: ");
-                    console.debug(e);
-                    console.debug("date: ");
-                    console.debug(e.dateStr);
-                    // $makeBooking(e, date.format());
-                    _openModal(e);
-                },
-                eventClick: (e) => {
-                    console.debug("event: ");
-                    console.debug(e);
-                    // change the border color just for fun
-                },
-                // views: {
-                //     month: { // name of view
-                //         titleFormat: 'MMMM Y'
-                //     },
-                //     week: { // name of view
-                //         titleFormat: 'D / MMMM / Y'
-                //     },
-                //     day: { // name of view
-                //         titleFormat: 'D MMMM Y'
-                //     }
-                // },
-                options: {
-                    locale: "en",
-                    isRTL: true
-                },
-                plugins: [
-                    'interaction', 'dayGrid', 'timeGrid'
-                ], // https://fullcalendar.io/docs/plugin-index
-                timeZone: 'UTC'
-            });
-            calendar.render();
-        });
-    </script>
-{% endblock %} #}
 
 {% block title %}The best open source scheduler app!
 {% endblock %}
 
 {% block body %}
+	<div id="calendar-holder" class="mt-5"></div>
 	{# {% include '@Calendar/calendar.html' %} #}
-	<div class="row justify-content-center">
-		<div class="col-12 py-4 text-center">
-			<h1 class="text-center">Welcome to scheduler</h1>
-		</div>
-		<div class="col-10">
-			{% for calendar in calendars if calendars|length > 0 %}
-				<div id="calendar-{{ calendar.id }}" data-calendar-id="{{ calendar.id }}" class="calendar card shadow p-3">
-					{{calendar.events|length}}
-					{% for event in calendar.events %}
-						{{ event.id}}
-						{{ event.thing.id}}
-						{{ event.thing.brand}}
-						{{ event.thing.model}}
-						{{ event.start|date("d-M-Y")}}
-						{{ event.end|date("d-M-Y")}}
-					{% endfor %}
-				</div>
-			{% else %}
-				<p class="h3">There is no calendars</p>
-				{% if is_granted("ROLE_ADMIN") %}
-					<a class="btn btn-dark" href="">Add Calendar ?</a>
-				{% endif %}
-			{% endfor %}
-		</div>
-	</div>
-	<div class="modal fade" id="makeBooking" role="dialog" tabindex="-1">
-		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Clicked Date</h5>
-					<button aria-label="Close" class="close" data-dismiss="modal" type="button">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form id="create-event-form" class="form" action="{{ path('event_new') }}" method="post">
-					<div class="modal-body py-5">
-						<div class="form-group form-row justify-content-center">
-							<div class="col-5">
-								<label for="tag">Tags</label>
-								<select class="custom-select" id="tags" name="tags">
-									<option selected>Choose tag to filter...</option>
-								</select>
-							</div>
-							<div class="col-5">
-								<label for="thing">Things</label>
-								<select class="custom-select" id="things" name="things">
-									<option selected>Choose thing you want book...</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group form-row justify-content-center">
-							<div class="col-5">
-								<label for="start">Start</label>
-								<input class="form-control" name="start" type="date" value="">
-							</div>
-							<div class="col-5">
-								<label for="end">End</label>
-								<input class="form-control" name="end" type="date" value="">
-							</div>
-						</div>
-						<div class="form-group form-row justify-content-center">
-							<div class="col-10 text-center">
-								<label for="comment">Comment</label>
-								<br>
-								<textarea class="comment form-control w-100 h-100" name="comment" placeholder="Let us know what you want"></textarea>
-							</div>
-						</div>
+	{# <div class="row justify-content-center">
+			<div class="col-12 py-4 text-center">
+				<h1 class="text-center">Welcome to scheduler</h1>
+			</div>
+			<div class="col-10">
+				{% for calendar in calendars if calendars|length > 0 %}
+					<div id="calendar-{{ calendar.id }}" data-calendar-id="{{ calendar.id }}" class="calendar card shadow p-3">
+						{{calendar.events|length}}
+						{% for event in calendar.events %}
+							{{ event.id}}
+							{{ event.thing.id}}
+							{{ event.thing.brand}}
+							{{ event.thing.model}}
+							{{ event.start|date("d-M-Y")}}
+							{{ event.end|date("d-M-Y")}}
+						{% endfor %}
 					</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-						<button class="btn btn-primary" name="submit" type="submit">Book it</button>
-					</div>
-				</form>
+				{% else %}
+					<p class="h3">There is no calendars</p>
+					{% if is_granted("ROLE_ADMIN") %}
+						<a class="btn btn-dark" href="">Add Calendar ?</a>
+					{% endif %}
+				{% endfor %}
 			</div>
 		</div>
-	</div>
+		<div class="modal fade" id="makeBooking" role="dialog" tabindex="-1">
+			<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Clicked Date</h5>
+						<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form id="create-event-form" class="form" action="{{ path('event_new') }}" method="post">
+						<div class="modal-body py-5">
+							<div class="form-group form-row justify-content-center">
+								<div class="col-5">
+									<label for="tag">Tags</label>
+									<select class="custom-select" id="tags" name="tags">
+										<option selected>Choose tag to filter...</option>
+									</select>
+								</div>
+								<div class="col-5">
+									<label for="thing">Things</label>
+									<select class="custom-select" id="things" name="things">
+										<option selected>Choose thing you want book...</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group form-row justify-content-center">
+								<div class="col-5">
+									<label for="start">Start</label>
+									<input class="form-control" name="start" type="date" value="">
+								</div>
+								<div class="col-5">
+									<label for="end">End</label>
+									<input class="form-control" name="end" type="date" value="">
+								</div>
+							</div>
+							<div class="form-group form-row justify-content-center">
+								<div class="col-10 text-center">
+									<label for="comment">Comment</label>
+									<br>
+									<textarea class="comment form-control w-100 h-100" name="comment" placeholder="Let us know what you want"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="submit" type="submit">Book it</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div> #}
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+	console.debug("calendar loaded");
+	var calendarEl = document.getElementById('calendar-holder');
+
+	var calendar = new FullCalendar.Calendar(calendarEl, {
+		defaultView: 'dayGridMonth',
+		editable: true,
+		selectable: true,
+		eventSources: [
+			{
+				url: "/fc-load-events",
+				method: "POST",
+				extraParams: {
+					filters: JSON.stringify({})
+				},
+				failure: () => {
+					alert("There was an error while fetching FullCalendar!");
+				},
+			},
+		],
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'dayGridMonth,timeGridWeek,timeGridDay',
+		},
+		plugins: ['interaction', 'dayGrid', 'timeGrid'], // https://fullcalendar.io/docs/plugin-index
+		timeZone: 'UTC',
+	});
+	calendar.render();
+});
+</script>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
 {% endblock %}

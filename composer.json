@@ -25,7 +25,7 @@
     "symfony/orm-pack": "^2.0",
     "symfony/security-csrf": "^5.1",
     "symfony/swiftmailer-bundle": "^3.2",
-    "symfony/webpack-encore-bundle": "^1.1",
+    "symfony/webpack-encore-bundle": "^1.7",
     "symfony/yaml": "^5.1",
     "tattali/calendar-bundle": "^1.2",
     "twig/extensions": "^1.5"

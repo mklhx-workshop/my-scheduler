@@ -3,12 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no" name="viewport">
-        <link rel="stylesheet" href='{{ asset('build/css/app.css') }}'>
         <title>
             {% block title %}Scheduler!
             {% endblock %}
         </title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('css/app') }}
+        {% endblock %}
     </head>
     <body>
         <header>
@@ -60,7 +61,7 @@
                 </div>
             {% endblock %}
         </main>
-        <footer class="fixed-bottom">
+        <footer class="">
             {% block footer %}
                 <div class="text-center mx-auto">
                     <p>Made with

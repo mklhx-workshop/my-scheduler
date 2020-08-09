@@ -3,5 +3,5 @@ home:
   controller: App\Controller\DefaultController::index
 logout:
   path: /logout
-# calendar:
-#   resource: "@CalendarBundle/Resources/config/routing.yaml"
+calendar:
+  resource: "@CalendarBundle/Resources/config/routing.yaml"

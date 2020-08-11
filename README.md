@@ -1,11 +1,9 @@
-# Symfony 5 docker containers
+# Dev Workflow
 
-A Proof-of-concept of a running Symfony 5 application inside containers
+```shell
+git clone https://github.com/mklhx-workshop/my-scheduler.git
 
-```
-git clone git@gitlab.com:martinpham/symfony-5-docker.git
-
-cd symfony-5-docker
+cd my-scheduler
 
 cd docker
 
@@ -22,14 +20,20 @@ docker-compose up
 
 Composer is included
 
-```
+```shell
 docker-compose run php-fpm composer 
+```
+
+To create database
+
+```
+docker-compose run php-fpm php bin/console doctrine:database:create
 ```
 
 To run fixtures
 
-```
-docker-compose run php-fpm bin/console doctrine:fixtures:load
+```shell
+docker-compose run php-fpm php bin/console doctrine:fixtures:load
 ```
 
 ### Webserver (Nginx)

@@ -1,12 +1,11 @@
 version: "3.7"
 
 services:
-  database:
+  mysql:
     build:
-      context: ./database
-    image: ${PROJECT_NAME}-database
-    # image: mysql:5.7
-    container_name: ${PROJECT_NAME}-database
+      context: ./mysql
+    image: ${PROJECT_NAME}-mysql
+    container_name: ${PROJECT_NAME}-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
       - MYSQL_DATABASE=${MYSQL_DATABASE_NAME}
@@ -18,9 +17,6 @@ services:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./database/data:/var/lib/mysql
     restart: on-failure
-    # restart: always
-    # networks:
-    #   - shadow
 
   php-fpm:
     build:
@@ -28,16 +24,14 @@ services:
     image: ${PROJECT_NAME}-php-fpm
     container_name: ${PROJECT_NAME}-php-fpm
     depends_on:
-      - database
+      - mysql
     environment:
       - APP_ENV=${APP_ENV}
       - APP_SECRET=${APP_SECRET}
-      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE_NAME}?serverVersion=5.7
+      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE_NAME}?serverVersion=5.7
     volumes:
       - ../app:/var/www
     restart: on-failure
-    networks: 
-      - shadow
 
   nginx:
     build:
@@ -54,10 +48,5 @@ services:
       - ./logs:/var/log
     ports:
       - "80:80"
-      # - "443:443"
+      - "443:443"
     restart: on-failure
-    networks: 
-      - shadow
-
-networks:
-  shadow:

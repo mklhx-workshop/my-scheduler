@@ -1,152 +1,3 @@
-# # version: "3.7"
-# # services:
-
-# #   # mysql configuration
-# #   # mysql:
-# #   #   image: mysql:5.7.23
-# #   #   restart: on-failure
-# #   #   container_name: ${PROJECT_NAME}-mysql
-# #   #   working_dir: /
-# #   #   volumes:
-# #   #     - .:/application
-# #   #     - c:/mysql/${PROJECT_NAME}/:/var/lib/mysql
-# #   #     # - ./docker/database:/var/lib/mysql
-# #   #   command:
-# #   #     - "--default-authentication-plugin=mysql_native_password"
-# #   #     - "--lower_case_table_names=1"
-# #   #   environment:
-# #   #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
-# #   #     - MYSQL_DATABASE=${MYSQL_DATABASE_NAME}
-# #   #     - MYSQL_USER=${MYSQL_USER:-root}
-# #   #     - MYSQL_PASSWORD=${MYSQL_PASSWORD:-root}
-# #   #   ports:
-# #   #     - "${MYSQL_PORT:-3306}:3306"
-# #   #   env_file:
-# #   #     - .env
-# #   #   networks:
-# #   #     - shadow
-
-# #   # php configuration
-# #   php:
-# #     image: my-scheduler-php
-# #     container_name: my-scheduler-php
-# #     # depends_on:
-# #     #   - mysql
-# #     restart: on-failure
-# #     build:
-# #       context: ../
-# #       dockerfile: ./docker/php/Dockerfile
-# #     working_dir: /
-# #     volumes:
-# #       - ../app/:/home/my-scheduler
-# #       # - ./docker/php/php.ini:/etc/php/7.3/apache2/php.ini
-# #       # - ./docker/php/my-scheduler-vhost.conf:/etc/apache2/sites-available/my-scheduler.conf
-# #       # - ./docker/php/my-scheduler-vhost.conf:/etc/apache2/sites-enabled/my-scheduler.conf
-# #       # - ./docker/php/php.ini
-# #       # - ./docker/apache/my-scheduler-vhost.conf:/etc/apache2/sites-available/my-scheduler-vhost.conf
-# #     environment:
-# #       - PROJECT_NAME=${PROJECT_NAME}
-# #       - APP_ENV=${APP_ENV}
-# #       - APP_SECRET=${APP_SECRET}
-# #       - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:${MYSQL_PORT}/${MYSQL_DATABASE_NAME}?serverVersion=5.7
-# #     env_file:
-# #       - ../app/.env
-# #     # networks:
-# #     #   - shadow
-
-# #   # apache configuration
-# #   # apache:
-# #   #   image: ${PROJECT_NAME}-apache
-# #   #   container_name: ${PROJECT_NAME}-apache
-# #   #   # depends_on:
-# #   #   #   - php
-# #   #   restart: on-failure
-# #   #   build:
-# #   #     context: ../
-# #   #     dockerfile: ./docker/apache/Dockerfile
-# #   #   working_dir: /
-# #   #   ports:
-# #   #     - '80:80'
-# #   #     - '443:443'
-# #   #   volumes:
-# #   #     - ../app/:/home/${PROJECT_NAME}
-# #   #     - ./docker/apache/${PROJECT_NAME}-vhost.conf:/etc/apache2/sites-available/${PROJECT_NAME}-vhost.conf
-# #       # - ./docker/apache/000-default-le-ssl.conf:/etc/apache2/sites-enabled/000-default-le-ssl.conf
-
-# #   # apache:
-# #   #   build: ./docker/apache
-# #   #   container_name: ${PROJECT_NAME}_apache
-# #   #   volumes:
-# #   #     - ./docker/config/vhosts:/etc/apache2/sites-enabled
-# #   #     - ./site:/home/wwwroot
-# #   #   depends_on:
-# #   #     - php
-# #   #   networks:
-# #   #     - internal
-# #   #   restart: always
-
-# # # networks:
-# # #   shadow:
-
-# version: '3.7'
-
-# services:
-#   # mysql:
-#   #   image: mysql:8
-#   #   container_name: ${PROJECT_NAME}-mysql
-#   #   volumes:
-#   #     - ./database:/var/lib/mysql
-#   #   command:
-#   #     - "--default-authentication-plugin=mysql_native_password"
-#   #     - "--lower_case_table_names=1"
-#   #   environment:
-#   #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
-#   #     - MYSQL_DATABASE=${MYSQL_DATABASE_NAME}
-#   #     - MYSQL_USER=${MYSQL_USER:-root}
-#   #     - MYSQL_PASSWORD=${MYSQL_PASSWORD:-root}
-#   #   ports:
-#   #     - "${MYSQL_PORT:-3306}:3306"
-#   #   env_file:
-#   #     - .env
-#   #   security_opt:
-#   #     - seccomp:unconfined
-#   #   restart: always
-#   #   networks:
-#   #     - internal
-
-#   php:
-#     build:
-#       context: ../
-#       dockerfile: ./docker/php/Dockerfile
-#     image: ${PROJECT_NAME}-php
-#     container_name: ${PROJECT_NAME}-php
-#     volumes:
-#       - ../app:/home/wwwroot
-#       - ./php/php.ini:/usr/local/etc/php/php.ini
-#     # depends_on:
-#     #   - mysql
-#     restart: always
-#     networks:
-#       - internal
-
-#   apache:
-#     build:
-#       context: ../
-#       dockerfile: ./docker/apache/Dockerfile
-#     image: ${PROJECT_NAME}-apache
-#     container_name: ${PROJECT_NAME}-apache
-#     volumes:
-#       - ../app:/home/wwwroot
-#       - ./apache/vhost:/etc/apache2/sites-enabled
-#     depends_on:
-#       - php
-#     networks:
-#       - internal
-#     restart: always
-
-# networks:
-#   internal:
-
 version: "3.7"
 
 services:
@@ -154,6 +5,7 @@ services:
     build:
       context: ./database
     image: ${PROJECT_NAME}-database
+    # image: mysql:5.7
     container_name: ${PROJECT_NAME}-database
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
@@ -166,7 +18,8 @@ services:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./database/data:/var/lib/mysql
     restart: on-failure
-    # networks: 
+    # restart: always
+    # networks:
     #   - shadow
 
   php-fpm:
@@ -179,7 +32,7 @@ services:
     environment:
       - APP_ENV=${APP_ENV}
       - APP_SECRET=${APP_SECRET}
-      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:${MYSQL_PORT}/${MYSQL_DATABASE_NAME}?serverVersion=5.7
+      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE_NAME}?serverVersion=5.7
     volumes:
       - ../app:/var/www
     restart: on-failure
@@ -200,8 +53,8 @@ services:
       - ./nginx/conf.d/:/etc/nginx/conf.d
       - ./logs:/var/log
     ports:
-      - "8000:80"
-      - "443:443"
+      - "80:80"
+      # - "443:443"
     restart: on-failure
     networks: 
       - shadow

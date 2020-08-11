@@ -1,1 +1,4 @@
 .env
+docker/database/data/**
+!docker/docker/data/**/
+!docker/docker/data/**/.gitkeep

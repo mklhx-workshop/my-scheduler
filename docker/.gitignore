@@ -1,4 +1,4 @@
 .env
-docker/mysql/data/**
-!docker/mysql/data/**/
-!docker/mysql/data/**/.gitkeep
+mysql/data/**
+!mysql/data/**/
+!mysql/data/**/.gitkeep

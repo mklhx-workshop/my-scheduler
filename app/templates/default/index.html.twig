@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+{% endblock %}
+
+{% block body %}
+	<div id="calendar-holder"></div>
+	{# {% include '@Calendar/calendar.html' %} #}
+	{# <div class="row justify-content-center">
+			<div class="col-12 py-4 text-center">
+				<h1 class="text-center">Welcome to scheduler</h1>
+			</div>
+			<div class="col-10">
+				{% for calendar in calendars if calendars|length > 0 %}
+					<div id="calendar-{{ calendar.id }}" data-calendar-id="{{ calendar.id }}" class="calendar card shadow p-3">
+						{{calendar.events|length}}
+						{% for event in calendar.events %}
+							{{ event.id}}
+							{{ event.thing.id}}
+							{{ event.thing.brand}}
+							{{ event.thing.model}}
+							{{ event.start|date("d-M-Y")}}
+							{{ event.end|date("d-M-Y")}}
+						{% endfor %}
+					</div>
+				{% else %}
+					<p class="h3">There is no calendars</p>
+					{% if is_granted("ROLE_ADMIN") %}
+						<a class="btn btn-dark" href="">Add Calendar ?</a>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		<div class="modal fade" id="makeBooking" role="dialog" tabindex="-1">
+			<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Clicked Date</h5>
+						<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form id="create-event-form" class="form" action="{{ path('event_new') }}" method="post">
+						<div class="modal-body py-5">
+							<div class="form-group form-row justify-content-center">
+								<div class="col-5">
+									<label for="tag">Tags</label>
+									<select class="custom-select" id="tags" name="tags">
+										<option selected>Choose tag to filter...</option>
+									</select>
+								</div>
+								<div class="col-5">
+									<label for="thing">Things</label>
+									<select class="custom-select" id="things" name="things">
+										<option selected>Choose thing you want book...</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group form-row justify-content-center">
+								<div class="col-5">
+									<label for="start">Start</label>
+									<input class="form-control" name="start" type="date" value="">
+								</div>
+								<div class="col-5">
+									<label for="end">End</label>
+									<input class="form-control" name="end" type="date" value="">
+								</div>
+							</div>
+							<div class="form-group form-row justify-content-center">
+								<div class="col-10 text-center">
+									<label for="comment">Comment</label>
+									<br>
+									<textarea class="comment form-control w-100 h-100" name="comment" placeholder="Let us know what you want"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+							<button class="btn btn-primary" name="submit" type="submit">Book it</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div> #}
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+	var calendarEl = document.getElementById('calendar-holder');
+	var calendar = new FullCalendar.Calendar(calendarEl, {
+		defaultView: 'dayGridMonth',
+		editable: true,
+		selectable: true,
+		eventSources: [
+			{
+				url: "/fc-load-events",
+				method: "POST",
+				extraParams: {
+					filters: JSON.stringify({})
+				},
+				failure: () => {
+					alert("There was an error while fetching FullCalendar!");
+				},
+			},
+		],
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'dayGridMonth,timeGridWeek,timeGridDay',
+		},
+		plugins: ['interaction', 'dayGrid', 'timeGrid'], // https://fullcalendar.io/docs/plugin-index
+		timeZone: 'UTC',
+	});
+	calendar.render();
+});
+</script>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+{% endblock %}

@@ -1,0 +1,10 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [NC,L]
+
+ErrorDocument 401 /erreurs/erreur_401.php
+ErrorDocument 403 /erreurs/erreur_403.php
+ErrorDocument 404 /erreurs/erreur_404.php
+ErrorDocument 500 /erreurs/erreur_500.php

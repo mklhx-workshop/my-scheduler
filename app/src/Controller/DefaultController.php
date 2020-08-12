@@ -14,17 +14,18 @@ class DefaultController extends AbstractController
      */
     public function index(CalendarRepository $calendarRepository): Response
     {
+        $calendars = [];
         $calendars = $calendarRepository->findBy(['activated' => true]);
         return $this->render('default/index.html.twig', ['calendars' => $calendars]);
         // return $this->render('default/index.html.twig');
     }
 
-    /**
-     * @Route("/admin", name="admin")
-     */
-    public function admin():Response
-    {
-        return $this->redirect('http://localhost:3000');
-    }
+    // /**
+    //  * @Route("/admin", name="admin")
+    //  */
+    // public function admin():Response
+    // {
+    //     return $this->redirect('http://localhost:3000');
+    // }
 
 }

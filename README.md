@@ -7,35 +7,36 @@ cd my-scheduler
 
 cd docker
 
-docker-compose up
+docker-compose up -d
 ```
 
-## Compose
+## Database
 
-### Database (MariaDB)
-
-...
-
-### PHP (PHP-FPM)
-
-Composer is included
-
+### Create Database
 ```shell
-docker-compose run php-fpm composer 
+cd docker
+docker-compose run php-fpm php bin/console d:d:c
 ```
 
-To create database
-
+### Update Database Schema
+```shell
+cd docker
+docker-compose run php-fpm php bin/console d:s:u -f
 ```
-docker-compose run php-fpm php bin/console doctrine:database:create
-```
 
-To run fixtures
-
+### Load Fixtures
 ```shell
 docker-compose run php-fpm php bin/console doctrine:fixtures:load
 ```
 
-### Webserver (Nginx)
+## Composer
+Composer is included in php-fpm image
 
-...
+```shell
+docker-compose run php-fpm composer install
+```
+
+## Webpack
+```shell
+docker-compose run webpack yarn install
+```
